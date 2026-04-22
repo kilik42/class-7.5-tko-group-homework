@@ -13,7 +13,7 @@
 
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service
-# Enable the Compute API 
+# Enable the Compute API so that we can create VPC networks and other compute resources
 resource "google_project_service" "compute" {
   
   service = "compute.googleapis.com"
@@ -21,13 +21,14 @@ resource "google_project_service" "compute" {
 }
 
 
-# Enable the GKE API
+# Enable the GKE API so that we can create Kubernetes clusters
 resource "google_project_service" "container" {
   service = "container.googleapis.com"
   disable_on_destroy = false
 }
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network 
+# what this does is create a custom VPC network named "main" with regional routing, no automatic subnet creation, a specified MTU, and it keeps the default routes
 resource "google_compute_network" "main" {
   name                            = "main"
   routing_mode                    = "REGIONAL"
