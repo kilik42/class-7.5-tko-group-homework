@@ -10,5 +10,10 @@ resource "google_compute_instance" "this" {
   }
   network_interface {
     network = "default"
+    access_config {
+      // required for external IP
+    }
   }
+  metadata_startup_script = file("startup.sh")
+  tags                    = ["http-server"]
 }
